@@ -1,8 +1,9 @@
 $(document).ready(function () {
-    let requestUrl = 'gen.php',
+    var requestUrl = 'gen.php',
         form = $('#sequenceForm'),
         sequence = $('#sequenceInput'),
         sequenceLengthVariants = $('#sequenceLength'),
+        buttonCopy = $('#buttonCopy'),
         options = '';
 
     /**
@@ -11,7 +12,7 @@ $(document).ready(function () {
      * @returns {jQuery.jqXHR}
      */
     function ajaxGetSequence() {
-        let sequenceLength = $('#sequenceLength').val(),
+        var sequenceLength = $('#sequenceLength').val(),
             requestData = { sequenceLength: sequenceLength };
 
         return $.ajax({
@@ -27,14 +28,23 @@ $(document).ready(function () {
     function generateSequence() {
         ajaxGetSequence().then(function (response) {
             sequence.val(response);
-            navigator.clipboard.writeText(response);
         });
     }
 
     form.submit(function (event) {
         generateSequence();
-
         event.preventDefault();
+    });
+
+    buttonCopy.click(function (params) {
+        var sequenceText = sequence.val();
+
+        if (sequenceText != '') {
+            navigator.clipboard.writeText(sequenceText);
+            buttonCopy.addClass('tooltip-container');
+        }
+    }).mouseleave(function () {
+        buttonCopy.removeClass('tooltip-container');
     });
 
     for (i = 10; i <= 25; i += 5) {
@@ -42,6 +52,5 @@ $(document).ready(function () {
     }
 
     sequenceLengthVariants.html(options);
-
     generateSequence();
 });
