@@ -3,10 +3,7 @@ $(document).ready(function () {
         form = $('#sequenceForm'),
         sequence = $('#sequenceInput'),
         sequenceLengthVariants = $('#sequenceLength'),
-        clipboardNotice = $('#clipboardNotice'),
         options = '';
-
-    clipboardNotice.hide();
 
     /**
      * Make an AJAX request and return the sequence
@@ -31,7 +28,6 @@ $(document).ready(function () {
         ajaxGetSequence().then(function (response) {
             sequence.val(response);
             navigator.clipboard.writeText(response);
-            clipboardNotice.show();
         });
     }
 
