@@ -1,0 +1,24 @@
+@tooltip_container_top: 39px !important;
+@tooltip_container_left: 66px;
+@tooltip_position: relative;
+@tooltip_left: -97px;
+@tooltip_arrow_top: -1px !important;
+@tooltip_arrow_left: 61px !important;
+
+.tt-container {
+    transition: 0.25s;
+    left: @tooltip_container_left;
+    top: @tooltip_container_top;
+    display: inline;
+}
+
+.tip {
+    position: @tooltip_position;
+    user-select: none;
+    cursor: default;
+}
+
+.tip-arrow {
+    top: @tooltip_arrow_top;
+    left: @tooltip_arrow_left;
+}

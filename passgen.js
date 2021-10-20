@@ -4,6 +4,7 @@ $(document).ready(function () {
         sequence = $('#sequenceInput'),
         sequenceLengthVariants = $('#sequenceLength'),
         buttonCopy = $('#buttonCopy'),
+        tooltipContainer = $('#tooltipContainer'),
         options = '';
 
     /**
@@ -31,6 +32,14 @@ $(document).ready(function () {
         });
     }
 
+    function tooltipShow(tooltip) {
+        tooltip.css('opacity', 1);
+    }
+
+    function tooltipHide(tooltip) {
+        tooltip.css('opacity', 0);
+    }
+
     form.submit(function (event) {
         generateSequence();
         event.preventDefault();
@@ -41,10 +50,10 @@ $(document).ready(function () {
 
         if (sequenceText != '') {
             navigator.clipboard.writeText(sequenceText);
-            buttonCopy.addClass('tooltip-container');
+            tooltipShow(tooltipContainer);
         }
-    }).mouseleave(function () {
-        buttonCopy.removeClass('tooltip-container');
+    }).mouseout(function () {
+        tooltipHide(tooltipContainer);
     });
 
     for (i = 10; i <= 25; i += 5) {
