@@ -9,7 +9,8 @@
         <link rel="stylesheet/less" type="text/css" href="css/styles.less" />
         <link rel="icon" href="favicon.png" />
         <script src="misc/less@4.1.1"></script>
-        <script src="misc/jquery-3.2.1.min.js"></script>
+        <script src="misc/jquery-3.6.0.min.js"></script>
+        <script src="misc/jquery-ui.min.js"></script>
         <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="passgen.js"></script>
     </head>
@@ -41,6 +42,10 @@
                             id="buttonCopy"
                             type="button"
                             class="btn btn-outline-primary"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="bottom"
+                            data-bs-trigger="hover focus"
+                            title="Copy to clipboard"
                         >
                             Copy
                         </button>
@@ -51,14 +56,6 @@
                             readonly
                             id="sequenceInput"
                         />
-
-                        <div
-                            class="tt-container tooltip bs-tooltip-bottom"
-                            id="tooltipContainer"
-                        >
-                            <div class="tip-arrow tooltip-arrow"></div>
-                            <div class="tooltip-inner">Copied to clipboard!</div>
-                        </div>
                     </div>
                 </div>
             </form>

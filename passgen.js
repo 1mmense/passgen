@@ -1,11 +1,15 @@
+// TODO: Refactor me
+
 $(document).ready(function () {
     var requestUrl = 'gen.php',
         form = $('#sequenceForm'),
         sequence = $('#sequenceInput'),
         sequenceLengthVariants = $('#sequenceLength'),
         buttonCopy = $('#buttonCopy'),
-        tooltipContainer = $('#tooltipContainer'),
         options = '';
+
+    /**/
+    var tooltip = new bootstrap.Tooltip(buttonCopy);
 
     /**
      * Make an AJAX request and return the sequence
@@ -45,16 +49,71 @@ $(document).ready(function () {
         event.preventDefault();
     });
 
-    buttonCopy.click(function (params) {
-        var sequenceText = sequence.val();
+    buttonCopy
+        .click(function (params) {
+            var sequenceText = sequence.val();
 
-        if (sequenceText != '') {
-            navigator.clipboard.writeText(sequenceText);
-            tooltipShow(tooltipContainer);
-        }
-    }).mouseout(function () {
-        tooltipHide(tooltipContainer);
-    });
+            if (sequenceText != '') {
+                var tooltipTextElement = $(
+                    '#' + buttonCopy.attr('aria-describedby')
+                ).find('.tooltip-inner');
+
+                var tooltipArrow = $('#' + buttonCopy.attr('aria-describedby')).find(
+                    '.tooltip-arrow'
+                );
+
+                if (tooltipTextElement !== undefined && tooltipArrow !== undefined) {
+                    tooltipTextElement.text('Copied!');
+
+                    position = tooltipTextElement.position();
+
+                    tooltipTextElement.position({
+                        my: 'top',
+                        at: 'bottom',
+                        of: tooltipArrow,
+                        collision: 'fit',
+                    });
+                }
+            }
+        })
+        .mouseenter(function name(params) {
+            var tooltipTextElement = $('#' + buttonCopy.attr('aria-describedby')).find(
+                '.tooltip-inner'
+            );
+
+            var tooltipArrow = $('#' + buttonCopy.attr('aria-describedby')).find(
+                '.tooltip-arrow'
+            );
+
+            if (tooltipTextElement !== undefined && position !== undefined) {
+                tooltipTextElement.position({
+                    my: 'top',
+                    at: 'bottom',
+                    of: tooltipArrow,
+                    collision: 'fit',
+                });
+            }
+        })
+        .mouseleave(function () {
+            tooltip.hide();
+
+            var tooltipTextElement = $('#' + buttonCopy.attr('aria-describedby')).find(
+                '.tooltip-inner'
+            );
+
+            var tooltipArrow = $('#' + buttonCopy.attr('aria-describedby')).find(
+                '.tooltip-arrow'
+            );
+
+            if (tooltipTextElement !== undefined && position !== undefined) {
+                tooltipTextElement.position({
+                    my: 'top',
+                    at: 'bottom',
+                    of: tooltipArrow,
+                    collision: 'fit',
+                });
+            }
+        });
 
     for (i = 10; i <= 25; i += 5) {
         options += '<option>' + i + '</option>';
