@@ -36,83 +36,62 @@ $(document).ready(function () {
         });
     }
 
-    function tooltipShow(tooltip) {
-        tooltip.css('opacity', 1);
+    /**
+     * Align tooltip text & tooltip arrow to each other.
+     * Change tooltip text to 'Copied!' if params.changeText is true.
+     */
+    function alignTooltip(params = []) {
+        var tooltipTextElement = $('#' + buttonCopy.attr('aria-describedby')).find(
+            '.tooltip-inner'
+        );
+
+        var tooltipArrow = $('#' + buttonCopy.attr('aria-describedby')).find(
+            '.tooltip-arrow'
+        );
+
+        if (tooltipTextElement !== undefined && tooltipArrow !== undefined) {
+            if (params.changeText !== undefined) {
+                tooltipTextElement.text('Copied!');
+            }
+
+            tooltipTextElement.position({
+                my: 'top',
+                at: 'bottom',
+                of: tooltipArrow,
+                collision: 'fit',
+            });
+        }
     }
 
-    function tooltipHide(tooltip) {
-        tooltip.css('opacity', 0);
-    }
-
+    /**
+     * Generate sequence on form submission ('Generate' button).
+     * Prevent page reloading
+     */
     form.submit(function (event) {
         generateSequence();
         event.preventDefault();
     });
 
+    /**
+     *
+     */
     buttonCopy
         .click(function (params) {
             var sequenceText = sequence.val();
 
             if (sequenceText != '') {
-                var tooltipTextElement = $(
-                    '#' + buttonCopy.attr('aria-describedby')
-                ).find('.tooltip-inner');
+                navigator.clipboard.writeText(sequenceText);
 
-                var tooltipArrow = $('#' + buttonCopy.attr('aria-describedby')).find(
-                    '.tooltip-arrow'
-                );
-
-                if (tooltipTextElement !== undefined && tooltipArrow !== undefined) {
-                    tooltipTextElement.text('Copied!');
-
-                    position = tooltipTextElement.position();
-
-                    tooltipTextElement.position({
-                        my: 'top',
-                        at: 'bottom',
-                        of: tooltipArrow,
-                        collision: 'fit',
-                    });
-                }
+                alignTooltip({ changeText: true });
             }
         })
         .mouseenter(function name(params) {
-            var tooltipTextElement = $('#' + buttonCopy.attr('aria-describedby')).find(
-                '.tooltip-inner'
-            );
-
-            var tooltipArrow = $('#' + buttonCopy.attr('aria-describedby')).find(
-                '.tooltip-arrow'
-            );
-
-            if (tooltipTextElement !== undefined && position !== undefined) {
-                tooltipTextElement.position({
-                    my: 'top',
-                    at: 'bottom',
-                    of: tooltipArrow,
-                    collision: 'fit',
-                });
-            }
+            alignTooltip();
         })
         .mouseleave(function () {
             tooltip.hide();
 
-            var tooltipTextElement = $('#' + buttonCopy.attr('aria-describedby')).find(
-                '.tooltip-inner'
-            );
-
-            var tooltipArrow = $('#' + buttonCopy.attr('aria-describedby')).find(
-                '.tooltip-arrow'
-            );
-
-            if (tooltipTextElement !== undefined && position !== undefined) {
-                tooltipTextElement.position({
-                    my: 'top',
-                    at: 'bottom',
-                    of: tooltipArrow,
-                    collision: 'fit',
-                });
-            }
+            alignTooltip();
         });
 
     for (i = 10; i <= 25; i += 5) {
