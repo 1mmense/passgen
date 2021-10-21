@@ -1,5 +1,3 @@
-// TODO: Refactor me
-
 $(document).ready(function () {
     var requestUrl = 'gen.php',
         form = $('#sequenceForm'),
@@ -73,7 +71,8 @@ $(document).ready(function () {
     });
 
     /**
-     *
+     * Copy sequence text to clipboard.
+     * Change tooltip depending on what's happening.
      */
     buttonCopy
         .click(function (params) {
